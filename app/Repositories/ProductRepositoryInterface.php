@@ -3,11 +3,11 @@
 namespace App\Repositories;
 
 use App\Models\Product;
-use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 interface ProductRepositoryInterface
 {
-    public function all(): Collection;
+    public function all(): LengthAwarePaginator;
 
     public function create(array $data): ?Product;
 

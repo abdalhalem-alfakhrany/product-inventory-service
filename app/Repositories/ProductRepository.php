@@ -3,13 +3,16 @@
 namespace App\Repositories;
 
 use App\Models\Product;
-use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Spatie\QueryBuilder\QueryBuilder;
 
 class ProductRepository implements ProductRepositoryInterface
 {
-    public function all(): Collection
+    public function all(int $perPage = 15): LengthAwarePaginator
     {
-        return Product::all();
+        return QueryBuilder::for(Product::class)
+        ->allowedFilters(['name'])
+            ->paginate($perPage);
     }
 
     public function create(array $data): ?Product
