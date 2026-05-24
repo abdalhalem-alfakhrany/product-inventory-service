@@ -27,7 +27,19 @@ class ProductFactory extends Factory
             'description' => fake()->paragraph(),
             'price' => fake()->numberBetween(100, 2000),
             'stock_quantity' => fake()->numberBetween(100, 500),
-            'status' => ProductStatus::Active,
+            'status' => $this->status(ProductStatus::Active),
         ];
     }
+
+    public function status(ProductStatus $status): static
+    {
+        return $this->state(fn(array $attributes) => [
+            'status' => $status,
+            'stock_quantity' => match ($status) {
+                ProductStatus::InActive => 0,
+                default => $attributes['stock_quantity']
+            }
+        ]);
+    }
+
 }
