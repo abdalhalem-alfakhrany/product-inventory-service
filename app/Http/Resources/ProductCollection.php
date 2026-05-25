@@ -17,8 +17,20 @@ class ProductCollection extends ResourceCollection
         return [
             "success" => true,
             "data" => $this->collection,
-            "meta" => [],
-            "pagination" => []
+            "meta" => [
+                'pagination' => [
+                    'total' => $this->total(),
+                    'per_page' => $this->perPage(),
+                    'current_page' => $this->currentPage(),
+                    'last_page' => $this->lastPage(),
+                    'next' => $this->nextPageUrl(),
+                    'prev' => $this->previousPageUrl(),
+                ]
+            ],
         ];
+    }
+    public function paginationInformation(Request $request, array $paginated, array $default): array
+    {
+        return [];
     }
 }
