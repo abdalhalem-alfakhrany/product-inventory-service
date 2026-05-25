@@ -8,7 +8,7 @@ use function Pest\Laravel\assertDatabaseHas;
 it('can list all products', function () {
     Product::factory()->status(ProductStatus::Active)->count(100)->create();
     $response = $this->getJson('/api/products/');
-    $response->assertSuccessful();
+    $response->assertOk();
     $response->assertJsonStructure([
         'success',
         'data',
@@ -58,5 +58,37 @@ it('can update product', function () {
     ]);
 
     $response->assertSuccessful();
-    assertDatabaseHas('products', ['name' => 'updated product name']);
+    $response->assertJsonStructure([
+        'success',
+        'data',
+        'meta'
+    ]);
+    assertDatabaseHas('products', [
+        'id' => $uuid,
+        'name' => 'updated product name',
+        'description' => 'updated product description'
+    ]);
+});
+
+it('can update product stock quantity', function () {
+    Product::factory()->status(ProductStatus::Active)->count(1)->create();
+    $uuid = Product::first()->id;
+
+    $response = $this->postJson("/api/products/$uuid/stock", ['stock_quantity' => 5]);
+    $response->assertSuccessful();
+    $response->assertJsonStructure([
+        'success',
+        'data',
+        'meta'
+    ]);
+
+    assertDatabaseHas('products', [
+        'id' => $uuid,
+        'stock_quantity' => 5
+    ]);
+});
+
+it('can list product with stock quantity below threshold', function () {
+    $response = $this->getJson('/api/products/low-stock');
+    $response->assertOk();
 });
