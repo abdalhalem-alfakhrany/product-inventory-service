@@ -9,12 +9,12 @@ use Spatie\QueryBuilder\QueryBuilder;
 
 class ProductRepository implements ProductRepositoryInterface
 {
-    public function all(int $perPage = 15): LengthAwarePaginator
+    public function all(int $page, int $perPage = 15): LengthAwarePaginator
     {
         return QueryBuilder::for(Product::class)
             ->allowedFilters(['name', 'sku', 'price'])
             ->allowedSorts(['name', 'sku', 'price'])
-            ->paginate($perPage);
+            ->paginate(perPage: $perPage, page: $page);
     }
 
     public function create(array $data): ?Product

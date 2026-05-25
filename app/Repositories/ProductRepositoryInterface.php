@@ -7,7 +7,7 @@ use Illuminate\Pagination\LengthAwarePaginator;
 
 interface ProductRepositoryInterface
 {
-    public function all(int $perPage): LengthAwarePaginator;
+    public function all(int $page, int $perPage): LengthAwarePaginator;
 
     public function create(array $data): ?Product;
 

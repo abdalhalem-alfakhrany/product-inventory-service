@@ -6,6 +6,7 @@ use App\Http\Requests\{CreateProductRequest, UpdateProductRequest, UpdateProduct
 use App\Http\Resources\{ProductCollection, ProductResource};
 use App\Http\Controllers\Controller;
 use App\Service\ProductService;
+use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Str;
 
@@ -15,9 +16,9 @@ class ProductController extends Controller
         private ProductService $productService
     ) {
     }
-    public function index()
+    public function index(Request $request)
     {
-        return new ProductCollection($this->productService->all());
+        return new ProductCollection($this->productService->all($request->get('page', 1)));
     }
 
     public function show(string $id)
