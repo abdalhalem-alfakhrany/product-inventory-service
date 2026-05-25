@@ -27,4 +27,8 @@ class ProductService
         $data['sku'] = Str::replace(' ', '_', Str::upper($data['name'])) . '-' . Str::random(8);
         return $this->repository->create($data);
     }
+    public function updateProduct(string $id, array $data)
+    {
+        return $this->repository->update($id, $data);
+    }
 }
