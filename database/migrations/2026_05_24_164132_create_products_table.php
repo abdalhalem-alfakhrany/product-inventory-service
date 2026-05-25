@@ -12,13 +12,13 @@ return new class extends Migration {
     {
         Schema::create('products', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->string('sku')->unique();
-            $table->string('name');
+            $table->string('sku')->unique()->index();
+            $table->string('name')->index();
             $table->text('description')->nullable();
             $table->decimal('price');
             $table->unsignedInteger('stock_quantity');
             $table->unsignedInteger('low_stock_threshold')->default(10);
-            $table->enum('status', ['active', 'inactive', 'discontinued'])->default('active');
+            $table->enum('status', ['active', 'inactive', 'discontinued'])->default('active')->index();
             $table->timestamps();
             $table->softDeletes();
         });
