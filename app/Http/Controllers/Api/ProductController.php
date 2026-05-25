@@ -60,6 +60,12 @@ class ProductController extends Controller
         return new ProductCollection($this->productService->lowStock());
     }
 
+    public function destroy(string $id)
+    {
+        $success = $this->productService->deleteProduct($id);
+        return new Response([], 204);
+    }
+
     private function validateUuid(string $id): ?Response
     {
         if (!Str::isUuid($id)) {
