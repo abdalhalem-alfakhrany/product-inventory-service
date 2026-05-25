@@ -23,14 +23,12 @@ class ProductFactory extends Factory
         return [
             'id' => Uuid::uuid7(),
             'name' => $name,
-            'sku' => fake()->unique()->numerify('PRD-#####'),
+            'sku' => fake()->unique()->numerify('PRD-########'),
             'description' => fake()->paragraph(),
             'price' => fake()->numberBetween(100, 2000),
             'stock_quantity' => fake()->numberBetween(100, 500),
-            'status' => $this->status(ProductStatus::Active),
         ];
     }
-
     public function status(ProductStatus $status): static
     {
         return $this->state(fn(array $attributes) => [
