@@ -7,7 +7,7 @@ use function Pest\Laravel\assertDatabaseCount;
 it('can list all products', function () {
     Product::factory()->status(ProductStatus::Active)->count(100)->create();
     $response = $this->getJson('/api/products/');
-    $response->assertStatus(200);
+    $response->assertSuccessful();
     $response->assertJsonStructure([
         'success',
         'data',
@@ -23,7 +23,7 @@ it('can get one product', function () {
     Product::factory()->status(ProductStatus::Active)->create();
     $uuid = Product::first()->id;
     $response = $this->getJson("/api/products/$uuid");
-    $response->assertStatus(200);
+    $response->assertSuccessful();
     $response->assertJsonStructure([
         'success',
         'data',
@@ -39,5 +39,6 @@ it('can create new product', function () {
         'stock_quantity' => 10,
     ]);
     assertDatabaseCount('products',1);
-    $response->assertStatus(200);
+    $response->assertCreated();
 });
+
