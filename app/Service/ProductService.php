@@ -2,13 +2,13 @@
 
 namespace App\Service;
 
-use App\Repositories\ProductRepository;
+use App\Repositories\ProductRepositoryInterface;
 use Str;
 
 class ProductService
 {
     public function __construct(
-        private ProductRepository $repository
+        private ProductRepositoryInterface $repository
     ) {
     }
 
@@ -40,5 +40,10 @@ class ProductService
     public function updateProductStock(string $id, array $data)
     {
         return $this->repository->update($id, $data);
+    }
+
+    public function deleteProduct(string $id)
+    {
+        return $this->repository->delete($id);
     }
 }
