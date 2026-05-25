@@ -11,7 +11,7 @@ class ProductRepository implements ProductRepositoryInterface
     public function all(int $perPage = 15): LengthAwarePaginator
     {
         return QueryBuilder::for(Product::class)
-        ->allowedFilters(['name'])
+            ->allowedFilters(['name'])
             ->paginate($perPage);
     }
 
@@ -32,7 +32,7 @@ class ProductRepository implements ProductRepositoryInterface
         return $product->delete();
     }
 
-    public function find(int $id): ?Product
+    public function find(string $id): ?Product
     {
         return Product::findOrFail($id);
     }
