@@ -32,7 +32,11 @@ class ProductController extends Controller
 
     public function update(string $id, UpdateProductRequest $request)
     {
-        $this->productService->updateProduct($id, $request->validated());
-        return Response([]);
+        $success = $this->productService->updateProduct($id, $request->validated());
+        return Response([
+            'success' => $success,
+            'data' => [],
+            'meta' => []
+        ]);
     }
 }
