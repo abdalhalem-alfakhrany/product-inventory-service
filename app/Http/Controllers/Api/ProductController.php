@@ -6,13 +6,26 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\ProductCollection;
 use App\Http\Resources\ProductResource;
 use App\Service\ProductService;
-use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
 class ProductController extends Controller
 {
-    public function index(Request $request, ProductService $productService)
+    public function __construct(
+        private ProductService $productService
+    ) {
+    }
+    public function index()
     {
-        return new ProductCollection($productService->all());
+        return new ProductCollection($this->productService->all());
+    }
+
+    public function show(string $id)
+    {
+        return (new ProductResource($this->productService->getProduct($id)))->response();
+    }
+
+    public function store()
+    {
+        return new Response();
     }
 }
