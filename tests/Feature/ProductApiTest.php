@@ -70,6 +70,15 @@ it('can update product', function () {
     ]);
 });
 
+it('can delete product', function () {
+    Product::factory()->status(ProductStatus::Active)->create();
+    $uuid = Product::first()->id;
+
+    $response = $this->deleteJson("/api/products/$uuid");
+    $response->assertStatus(204);
+    assertDatabaseCount('products', 0);
+});
+
 it('can update product stock quantity', function () {
     Product::factory()->status(ProductStatus::Active)->count(1)->create();
     $uuid = Product::first()->id;
