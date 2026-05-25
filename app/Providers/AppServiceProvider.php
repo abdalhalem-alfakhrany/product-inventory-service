@@ -4,9 +4,9 @@ namespace App\Providers;
 
 use App\Service\ProductService;
 use Illuminate\Foundation\Application;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
-use \App\Repositories\ProductRepository;
-use \App\Repositories\ProductRepositoryInterface;
+use \App\Repositories\{ProductRepository, ProductRepositoryInterface};
 
 class AppServiceProvider extends ServiceProvider
 {
