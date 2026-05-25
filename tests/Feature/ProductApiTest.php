@@ -3,6 +3,7 @@
 use App\Enum\ProductStatus;
 use App\Models\Product;
 use function Pest\Laravel\assertDatabaseCount;
+use function Pest\Laravel\assertDatabaseHas;
 
 it('can list all products', function () {
     Product::factory()->status(ProductStatus::Active)->count(100)->create();
@@ -38,7 +39,24 @@ it('can create new product', function () {
         'price' => 100,
         'stock_quantity' => 10,
     ]);
-    assertDatabaseCount('products',1);
+    assertDatabaseCount('products', 1);
     $response->assertCreated();
+    $response->assertJsonStructure([
+        'success',
+        'data',
+        'meta'
+    ]);
 });
 
+it('can update product', function () {
+    Product::factory()->status(ProductStatus::Active)->count(1)->create();
+    $uuid = Product::first()->id;
+
+    $response = $this->putJson("/api/products/$uuid", [
+        'name' => 'updated product name',
+        'description' => 'updated product description',
+    ]);
+
+    $response->assertSuccessful();
+    assertDatabaseHas('products', ['name' => 'updated product name']);
+});
