@@ -5,16 +5,15 @@ namespace App\Models;
 use App\Enum\ProductStatus;
 use App\Observers\ProductObserver;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\{Builder, Model, SoftDeletes};
 use Ramsey\Uuid\Nonstandard\Uuid;
 
 #[ObservedBy(ProductObserver::class)]
 class Product extends Model
 {
-    use HasFactory, HasUuids;
+    use HasFactory, HasUuids, SoftDeletes;
     protected $guarded = [];
     protected $casts = ['status' => ProductStatus::class];
     protected $keyType = 'string';
@@ -24,7 +23,6 @@ class Product extends Model
     {
         return Uuid::uuid7()->toString();
     }
-
 
     public function scopeLowStock(Builder $query): Builder
     {
