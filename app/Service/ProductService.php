@@ -3,6 +3,7 @@
 namespace App\Service;
 
 use App\Repositories\ProductRepositoryInterface;
+use Str;
 
 class ProductService
 {
@@ -23,6 +24,7 @@ class ProductService
 
     public function createProduct(array $data)
     {
+        $data['sku'] = Str::replace(' ', '_', Str::upper($data['name'])) . '-' . Str::random(8);
         return $this->repository->create($data);
     }
 }
