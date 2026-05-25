@@ -20,7 +20,7 @@ class ProductRepository implements ProductRepositoryInterface
         return Product::create($data);
     }
 
-    public function update(array $data, int $id): int
+    public function update(string $id, array $data): int
     {
         $product = Product::findOrFail($id);
         return $product->update($data);
