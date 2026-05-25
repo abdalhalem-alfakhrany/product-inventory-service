@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Exceptions\ProductNotFoundException;
 use App\Models\Product;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Spatie\QueryBuilder\QueryBuilder;
@@ -20,20 +21,20 @@ class ProductRepository implements ProductRepositoryInterface
         return Product::create($data);
     }
 
-    public function update(string $id, array $data): int
+    public function update(string $id, array $data): bool
     {
-        $product = Product::findOrFail($id);
+        $product = Product::find($id) ?? throw new ProductNotFoundException();
         return $product->update($data);
     }
 
     public function delete(int $id): bool
     {
-        $product = Product::findOrFail($id);
+        $product = Product::find($id) ?? throw new ProductNotFoundException();
         return $product->delete();
     }
 
     public function find(string $id): ?Product
     {
-        return Product::findOrFail($id);
+        return Product::find($id) ?? throw new ProductNotFoundException();
     }
 }
