@@ -18,10 +18,10 @@ use Illuminate\Support\Facades\Route;
 Route::controller(ProductController::class)->prefix('products')->group(function () {
     Route::get('/', 'index');
     Route::post('/', 'store');
+    Route::get('/low-stock', 'low_stock');
     Route::get('/{id}', 'show');
     Route::put('/{id}', 'update');
     Route::delete('/{id}', 'destroy');
 
     Route::post('/{id}/stock', 'adjust_stock');
-    Route::get('low-stock', 'low_stock');
 });
