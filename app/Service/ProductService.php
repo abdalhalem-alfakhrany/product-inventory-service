@@ -11,8 +11,13 @@ class ProductService
     ) {
     }
 
-    public function all()
+    public function all($perPage = 15)
     {
-        return $this->repository->all();
+        return $this->repository->all($perPage);
+    }
+
+    public function getProduct(string $id)
+    {
+    return $this->repository->find($id);
     }
 }
