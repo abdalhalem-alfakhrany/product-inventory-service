@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class ProductResource extends JsonResource
@@ -21,5 +22,16 @@ class ProductResource extends JsonResource
             'price' => $this->price,
             'description' => $this->description
         ];
+    }
+
+    public function withResponse(Request $request, JsonResponse $response): void
+    {
+        $data = $response->getData(true);
+
+        $response->setData([
+            'success' => true,
+            'data' => $data['data'],
+            'meta' => []
+        ]);
     }
 }
