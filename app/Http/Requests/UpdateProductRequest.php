@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests;
 
+use App\Enum\ProductStatus;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateProductRequest extends FormRequest
 {
@@ -25,6 +27,7 @@ class UpdateProductRequest extends FormRequest
             'name' => ['string', 'min:10', 'max:255', 'nullable'],
             'description' => ['string', 'nullable'],
             'price' => ['numeric', 'min:1', 'nullable'],
+            'status' => [Rule::enum(ProductStatus::class)]
         ];
     }
 }
