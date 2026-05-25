@@ -18,6 +18,11 @@ class ProductService
 
     public function getProduct(string $id)
     {
-    return $this->repository->find($id);
+        return $this->repository->find($id);
+    }
+
+    public function createProduct(array $data)
+    {
+        return $this->repository->create($data);
     }
 }

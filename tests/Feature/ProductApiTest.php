@@ -2,6 +2,7 @@
 
 use App\Enum\ProductStatus;
 use App\Models\Product;
+use function Pest\Laravel\assertDatabaseCount;
 
 it('can list all products', function () {
     Product::factory()->status(ProductStatus::Active)->count(100)->create();
@@ -37,5 +38,6 @@ it('can create new product', function () {
         'price' => 100,
         'stock_quantity' => 10,
     ]);
+    assertDatabaseCount('products',1);
     $response->assertStatus(200);
 });

@@ -14,7 +14,7 @@ return new class extends Migration {
             $table->uuid('id')->primary();
             $table->string('sku')->unique();
             $table->string('name');
-            $table->text('description');
+            $table->text('description')->nullable();
             $table->decimal('price');
             $table->unsignedInteger('stock_quantity');
             $table->unsignedInteger('low_stock_threshold')->default(10);

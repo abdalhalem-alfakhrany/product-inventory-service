@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CreateProductRequest;
 use App\Http\Resources\ProductCollection;
 use App\Http\Resources\ProductResource;
 use App\Service\ProductService;
@@ -24,8 +25,8 @@ class ProductController extends Controller
         return (new ProductResource($this->productService->getProduct($id)))->response();
     }
 
-    public function store()
+    public function store(CreateProductRequest $request)
     {
-        return new Response();
+        return (new ProductResource($this->productService->createProduct($request->validated())))->response();
     }
 }
