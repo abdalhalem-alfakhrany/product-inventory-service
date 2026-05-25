@@ -29,7 +29,7 @@ class ProductRepository implements ProductRepositoryInterface
         return $product->fresh();
     }
 
-    public function delete(int $id): bool
+    public function delete(string $id): bool
     {
         $product = Product::find($id) ?? throw new ProductNotFoundException();
         return $product->delete();
@@ -40,7 +40,7 @@ class ProductRepository implements ProductRepositoryInterface
         return Product::find($id) ?? throw new ProductNotFoundException();
     }
 
-    public function lowStock(int $perPage = 15)
+    public function lowStock(int $perPage = 15): LengthAwarePaginator
     {
         return QueryBuilder::for(Product::class)
             ->lowStock()
