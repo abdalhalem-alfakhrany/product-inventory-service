@@ -12,7 +12,8 @@ class ProductRepository implements ProductRepositoryInterface
     public function all(int $perPage = 15): LengthAwarePaginator
     {
         return QueryBuilder::for(Product::class)
-            ->allowedFilters(['name'])
+            ->allowedFilters(['name', 'sku', 'price'])
+            ->allowedSorts(['name', 'sku', 'price'])
             ->paginate($perPage);
     }
 
@@ -21,10 +22,11 @@ class ProductRepository implements ProductRepositoryInterface
         return Product::create($data);
     }
 
-    public function update(string $id, array $data): bool
+    public function update(string $id, array $data): ?Product
     {
         $product = Product::find($id) ?? throw new ProductNotFoundException();
-        return $product->update($data);
+        $product->update($data);
+        return $product->fresh();
     }
 
     public function delete(int $id): bool
@@ -36,5 +38,14 @@ class ProductRepository implements ProductRepositoryInterface
     public function find(string $id): ?Product
     {
         return Product::find($id) ?? throw new ProductNotFoundException();
+    }
+
+    public function lowStock(int $perPage = 15)
+    {
+        return QueryBuilder::for(Product::class)
+            ->lowStock()
+            ->allowedFilters(['name', 'sku', 'price'])
+            ->allowedSorts(['name', 'sku', 'price'])
+            ->paginate($perPage);
     }
 }
