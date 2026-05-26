@@ -220,6 +220,33 @@ docker compose exec app ./vendor/bin/pest --watch
 
 ---
 
+## Postman Collection
+
+A Postman collection is included in the repository at `postman/Product Inventory Service.json`.
+
+Import it into Postman:
+
+1. Open Postman
+2. Click **Import**
+3. Select the file `postman/Product Inventory Service.json`
+4. Set the `product_id` variable in the collection to a valid UUID from your database
+
+### Included Requests
+
+| Request | Method | Endpoint |
+|---|---|---|
+| All products | GET | `/api/products?page=2` |
+| Get product by ID | GET | `/api/products/{{product_id}}` |
+| Create new product | POST | `/api/products` |
+| Update product | PUT | `/api/products/{{product_id}}` |
+| Adjust stock | POST | `/api/products/{{product_id}}/stock` |
+| Low stock products | GET | `/api/products/low-stock` |
+| Delete product | DELETE | `/api/products/{{product_id}}` |
+
+> All requests include `Accept: application/json` header. Make sure your environment base URL is set to `http://127.0.0.1:8080`.
+
+---
+
 ## API Documentation
 
 Generate the Swagger docs:
